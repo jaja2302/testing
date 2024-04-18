@@ -36,7 +36,6 @@ app.use(fileUpload({
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, 'client')));
 const server = require("http").createServer(app);
 const io = require("socket.io")(server);
 const port = process.env.PORT || 3000;
@@ -44,11 +43,11 @@ const qrcode = require("qrcode");
 
 app.use("/assets", express.static(__dirname + "/client/assets"));
 
-// app.get("/scan", (req, res) => {
-//     res.sendFile("./client/server.html", {
-//         root: __dirname,
-//     });
-// });
+app.get("/scan", (req, res) => {
+    res.sendFile("./client/index.html", {
+        root: __dirname,
+    });
+});
 
 app.get("/", (req, res) => {
     res.sendFile("./client/server.html", {
@@ -622,4 +621,3 @@ connectToWhatsApp()
 server.listen(port, () => {
     console.log("Server Berjalan pada Port : " + port);
 });
-// app.listen(port, () => console.log(`Server running on ${port}, http://localhost:${port}`));
